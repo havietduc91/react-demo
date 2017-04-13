@@ -10,6 +10,7 @@ import Avatar from 'material-ui/Avatar';
 import Subheader from 'material-ui/Subheader';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import ReactPlayer from 'react-player'
+import { BarChart } from "react-d3-components/lib";
 
 let SelectableList = makeSelectable(List);
 
@@ -59,6 +60,26 @@ class ContainerTodo extends React.Component {
 
     render() {
         let {todos} = this.props;
+
+        let chart1Data = [{
+            label: 'somethingA',
+            values: [{x: 'SomethingA', y: 10}, {x: 'SomethingB', y: 4}, {x: 'SomethingC', y: 3}]
+        }];
+
+        let chart2Data = [
+            {
+                label: 'somethingA',
+                values: [{x: 'SomethingA', y: 10}, {x: 'SomethingB', y: 4}, {x: 'SomethingC', y: 3}]
+            },
+            {
+                label: 'somethingB',
+                values: [{x: 'SomethingA', y: 6}, {x: 'SomethingB', y: 8}, {x: 'SomethingC', y: 5}]
+            },
+            {
+                label: 'somethingC',
+                values: [{x: 'SomethingA', y: 6}, {x: 'SomethingB', y: 8}, {x: 'SomethingC', y: 5}]
+            }
+        ];
 
         return (
             <div id="container-todo">
@@ -132,9 +153,23 @@ class ContainerTodo extends React.Component {
                     </TableBody>
                 </Table>
 
-                <ReactPlayer url='http://www.oxfordlearnersdictionaries.com/media/english/us_pron/t/tes/test_/test__us_1.mp3' playing controls="true" className="react-player"/>
-                <ReactPlayer url='https://www.youtube.com/watch?v=Y9XZQO1n_7c' playing controls="true"/>
-                <ReactPlayer url='https://vimeo.com/173959909' playing controls="true"/>
+                <ReactPlayer url='http://www.oxfordlearnersdictionaries.com/media/english/us_pron/t/tes/test_/test__us_1.mp3'
+                             playing controls={true} className="react-player"/>
+                <ReactPlayer url='https://www.youtube.com/watch?v=Y9XZQO1n_7c' playing controls={true}/>
+                <ReactPlayer url='https://vimeo.com/173959909' playing controls={true}/>
+
+                <BarChart
+                    data={chart1Data}
+                    width={400}
+                    height={400}
+                    margin={{top: 10, bottom: 50, left: 50, right: 10}}/>
+
+                <BarChart
+                    groupedBars
+                    data={chart2Data}
+                    width={400}
+                    height={400}
+                    margin={{top: 10, bottom: 50, left: 50, right: 10}}/>
             </div>
         );
     }
