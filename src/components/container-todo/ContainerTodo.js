@@ -11,6 +11,8 @@ import Subheader from 'material-ui/Subheader';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import ReactPlayer from 'react-player'
 import { BarChart } from "react-d3-components/lib";
+import PDF from 'react-pdf-js';
+import examplePdf from './../../../public/tkud2015_ch00_3577.pdf';
 
 let SelectableList = makeSelectable(List);
 
@@ -52,6 +54,46 @@ class ContainerTodo extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
+
+        this.onDocumentComplete = this.onDocumentComplete.bind(this);
+        this.onPageComplete = this.onPageComplete.bind(this);
+        this.handlePrevious = this.handlePrevious.bind(this);
+        this.handleNext = this.handleNext.bind(this);
+    }
+
+    onDocumentComplete(pages) {
+        this.setState({ page: 1, pages });
+    }
+
+    onPageComplete(page) {
+        this.setState({ page });
+    }
+
+    handlePrevious() {
+        this.setState({ page: this.state.page - 1 });
+    }
+
+    handleNext() {
+        this.setState({ page: this.state.page + 1 });
+    }
+
+    renderPagination(page, pages) {
+        let previousButton = <li className="previous" onClick={this.handlePrevious}><a href="#"><i className="fa fa-arrow-left"></i> Previous</a></li>;
+        if (page === 1) {
+            previousButton = <li className="previous disabled"><a href="#"><i className="fa fa-arrow-left"></i> Previous</a></li>;
+        }
+        let nextButton = <li className="next" onClick={this.handleNext}><a href="#">Next <i className="fa fa-arrow-right"></i></a></li>;
+        if (page === pages) {
+            nextButton = <li className="next disabled"><a href="#">Next <i className="fa fa-arrow-right"></i></a></li>;
+        }
+        return (
+            <nav>
+                <ul className="pager">
+                    {previousButton}
+                    {nextButton}
+                </ul>
+            </nav>
+        );
     }
 
     componentWillMount() {
@@ -80,6 +122,11 @@ class ContainerTodo extends React.Component {
                 values: [{x: 'SomethingA', y: 6}, {x: 'SomethingB', y: 8}, {x: 'SomethingC', y: 5}]
             }
         ];
+
+        let pagination = null;
+        if (this.state.pages) {
+            pagination = this.renderPagination(this.state.page, this.state.pages);
+        }
 
         return (
             <div id="container-todo">
@@ -170,6 +217,12 @@ class ContainerTodo extends React.Component {
                     width={400}
                     height={400}
                     margin={{top: 10, bottom: 50, left: 50, right: 10}}/>
+
+                <PDF file={examplePdf}
+                     onDocumentComplete={this.onDocumentComplete}
+                     onPageComplete={this.onPageComplete}
+                     page={this.state.page} />
+                {pagination}
             </div>
         );
     }
