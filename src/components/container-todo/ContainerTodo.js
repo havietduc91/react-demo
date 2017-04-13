@@ -9,6 +9,7 @@ import {List, ListItem, makeSelectable} from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
 import Subheader from 'material-ui/Subheader';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
+import ReactPlayer from 'react-player'
 
 let SelectableList = makeSelectable(List);
 
@@ -130,6 +131,10 @@ class ContainerTodo extends React.Component {
                         </TableRow>
                     </TableBody>
                 </Table>
+
+                <ReactPlayer url='http://www.oxfordlearnersdictionaries.com/media/english/us_pron/t/tes/test_/test__us_1.mp3' playing controls="true" className="react-player"/>
+                <ReactPlayer url='https://www.youtube.com/watch?v=Y9XZQO1n_7c' playing controls="true"/>
+                <ReactPlayer url='https://vimeo.com/173959909' playing controls="true"/>
             </div>
         );
     }
