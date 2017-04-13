@@ -18,10 +18,7 @@ class ContainerTodo extends React.Component {
 
     render() {
         let {todos} = this.props;
-        console.log('this.state.todos----------------');
-        console.log(this.props);
-        console.log(todos);
-
+        
         return (
             <div id="container-todo">
                 <AddTodo/>
